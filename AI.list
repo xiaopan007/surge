@@ -1,4 +1,4 @@
-# 规则数量: 138
+# 规则数量: 145
 DOMAIN,browser-intake-datadoghq.com
 DOMAIN,chat.openai.com.cdn.cloudflare.net
 DOMAIN,openai-api.arkoselabs.com
@@ -98,6 +98,13 @@ DOMAIN,guzzoni.apple.com
 DOMAIN,gspe1-ssl.ls.apple.com
 DOMAIN-SUFFIX,apps.mzstatic.com
 DOMAIN-SUFFIX,claude.com
+DOMAIN-SUFFIX,clau.de
+DOMAIN-SUFFIX,claudemcpclient.com
+DOMAIN-SUFFIX,claudemcpcontent.com
+DOMAIN-SUFFIX,claudeusercontent.com
+DOMAIN,anthropic.auth0.com
+DOMAIN,anthropic.com.cdn.cloudflare.net
+DOMAIN,anthropic-com.ghost.io
 DOMAIN-SUFFIX,chat.com
 DOMAIN-SUFFIX,livekit.cloud
 DOMAIN-SUFFIX,sora.com
