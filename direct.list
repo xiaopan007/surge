@@ -1,4 +1,4 @@
-# 规则数量: 10
+# 规则数量: 11
 DOMAIN-SUFFIX,5pcw.com
 DOMAIN-SUFFIX,ipip.net
 DOMAIN-SUFFIX,oray.com
@@ -9,3 +9,4 @@ DOMAIN-SUFFIX,zdsr.com
 DOMAIN-SUFFIX,zdsr.net
 DOMAIN-SUFFIX,qq.com
 DOMAIN-KEYWORD,duolingo
+DEST-PORT,22
