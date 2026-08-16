@@ -1,4 +1,4 @@
-# 规则数量: 36000
+# 规则数量: 36002
 DOMAIN,1password.drift.click
 DOMAIN,adobeereg.com
 DOMAIN,agb9r0ad.qllfkl.com
@@ -21269,6 +21269,7 @@ DOMAIN-SUFFIX,rsc-yorkshire-humberside.ac.uk
 DOMAIN-SUFFIX,rscem.ac.uk
 DOMAIN-SUFFIX,rsd-exeter.ac.uk
 DOMAIN-SUFFIX,rse.ac.uk
+DOMAIN-SUFFIX,rsg.ms
 DOMAIN-SUFFIX,rsg.sc
 DOMAIN-SUFFIX,rshb.ru
 DOMAIN-SUFFIX,rsk.co
@@ -21627,6 +21628,8 @@ DOMAIN-SUFFIX,sbusinesslondon.ac.uk
 DOMAIN-SUFFIX,sbux.com.my
 DOMAIN-SUFFIX,sbuxcard.com
 DOMAIN-SUFFIX,sc-cdn.net
+DOMAIN-SUFFIX,sc-gw.com
+DOMAIN-SUFFIX,sc-static.net
 DOMAIN-SUFFIX,sc-toolkit.ac.uk
 DOMAIN-SUFFIX,sc.com
 DOMAIN-SUFFIX,sc1.ac.uk
@@ -35636,7 +35639,6 @@ DOMAIN-SUFFIX,58dp.net
 DOMAIN-SUFFIX,marketo.net
 DOMAIN-SUFFIX,owo.cab
 DOMAIN-SUFFIX,restcountries.com
-DOMAIN-SUFFIX,sc-static.net
 DOMAIN-SUFFIX,libravatar.org
 DOMAIN-SUFFIX,collei.net
 DOMAIN-SUFFIX,wknd.ai
