@@ -1,39 +1,35 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import json
+import sys
+import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
 
-REPO_TREE_URL = "https://api.github.com/repos/blackmatrix7/ios_rule_script/git/trees/master?recursive=1"
 RAW_BASE_URL = "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master"
 CONNERSHUA_AI_URL = "https://raw.githubusercontent.com/ConnersHua/RuleGo/master/Surge/Ruleset/Extra/AI.list"
 REPO_ROOT = Path(__file__).resolve().parents[1]
 AI_OUTPUT = REPO_ROOT / "AI.list"
+MAX_FETCH_ATTEMPTS = 4
+RETRYABLE_HTTP_STATUS = {403, 429, 500, 502, 503, 504}
 
 # blackmatrix7 does not publish a single AI aggregate list. Aggregate common
-# AI service lists and keep compatibility dependencies, but let Apple/iCloud
-# stay under the Apple policy group to avoid breaking CloudKit/iCloud sync.
-SOURCE_NAMES = [
-    "OpenAI",
-    "Claude",
-    "Anthropic",
-    "Gemini",
-    "BardAI",
-    "Copilot",
-    "Civitai",
-    "Jetbrains",
-    "aiXcoder",
-]
-
-PREFERRED_SUFFIXES = [
-    "_All_No_Resolve.list",
-    "_No_Resolve.list",
-    ".list",
-    "_All.list",
-    "_Domain.list",
-    "_Resolve.list",
+# AI service lists and keep compatibility dependencies, but let Apple/iCloud stay
+# under the Apple policy group to avoid breaking CloudKit/iCloud sync. Keep the
+# source paths explicit instead of discovering them through GitHub's repository
+# tree API: hosted runners share anonymous API limits, which caused repeated 403s.
+SOURCE_PATHS = [
+    "rule/Surge/OpenAI/OpenAI.list",
+    "rule/Surge/Claude/Claude.list",
+    "rule/Surge/Anthropic/Anthropic.list",
+    "rule/Surge/Gemini/Gemini.list",
+    "rule/Surge/BardAI/BardAI.list",
+    "rule/Surge/Copilot/Copilot.list",
+    "rule/Surge/Civitai/Civitai.list",
+    "rule/Surge/Jetbrains/Jetbrains.list",
+    "rule/Surge/aiXcoder/aiXcoder.list",
 ]
 
 EXCLUDED_EXACT_VALUES = {
@@ -54,22 +50,32 @@ RULE_OPTIONS = {"extended-matching", "no-resolve"}
 
 
 def fetch_text(url: str) -> str:
-    request = urllib.request.Request(url, headers={"User-Agent": "xiaopan007-surge-ai-builder"})
-    with urllib.request.urlopen(request, timeout=30) as response:
-        return response.read().decode("utf-8")
+    request = urllib.request.Request(
+        url,
+        headers={"User-Agent": "xiaopan007-surge-ai-builder"},
+    )
+    for attempt in range(1, MAX_FETCH_ATTEMPTS + 1):
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                return response.read().decode("utf-8")
+        except urllib.error.HTTPError as error:
+            if error.code not in RETRYABLE_HTTP_STATUS:
+                raise
+            last_error = error
+        except (TimeoutError, urllib.error.URLError) as error:
+            last_error = error
 
+        if attempt < MAX_FETCH_ATTEMPTS:
+            delay = 2 ** (attempt - 1)
+            print(
+                f"Fetch attempt {attempt} failed for {url}; retrying in {delay}s",
+                file=sys.stderr,
+            )
+            time.sleep(delay)
 
-def fetch_json(url: str) -> dict:
-    return json.loads(fetch_text(url))
-
-
-def choose_source_path(paths: set[str], name: str) -> str:
-    base = f"rule/Surge/{name}/{name}"
-    for suffix in PREFERRED_SUFFIXES:
-        candidate = f"{base}{suffix}"
-        if candidate in paths:
-            return candidate
-    raise RuntimeError(f"No Surge rule list found for {name}")
+    raise RuntimeError(
+        f"Failed to fetch {url} after {MAX_FETCH_ATTEMPTS} attempts"
+    ) from last_error
 
 
 def normalize_rule(raw_line: str) -> str | None:
@@ -99,18 +105,13 @@ def write_ruleset(path: Path, rules: list[str]) -> None:
 
 
 def main() -> None:
-    tree = fetch_json(REPO_TREE_URL)
-    paths = {item["path"] for item in tree.get("tree", []) if item.get("type") == "blob"}
-
-    selected_paths = [choose_source_path(paths, name) for name in SOURCE_NAMES]
-
     seen: set[str] = set()
     rules: list[str] = []
 
     connershua_text = fetch_text(CONNERSHUA_AI_URL)
     source_texts = [
         (path, fetch_text(f"{RAW_BASE_URL}/{path}"))
-        for path in selected_paths
+        for path in SOURCE_PATHS
     ]
     source_texts.append(("ConnersHua/RuleGo Surge/Ruleset/Extra/AI.list", connershua_text))
 
