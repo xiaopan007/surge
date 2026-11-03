@@ -1,4 +1,4 @@
-# 规则数量: 273
+# 规则数量: 276
 DOMAIN-SUFFIX,tailscale.com
 DOMAIN-SUFFIX,ts.net
 IP-CIDR,100.64.0.0/10,no-resolve
@@ -70,6 +70,7 @@ DOMAIN,derp27e.tailscale.com
 DOMAIN,derp28b.tailscale.com
 DOMAIN,derp28c.tailscale.com
 DOMAIN,derp28d.tailscale.com
+DOMAIN,derp28e.tailscale.com
 DOMAIN,derp2d.tailscale.com
 DOMAIN,derp2e.tailscale.com
 DOMAIN,derp2f.tailscale.com
@@ -103,6 +104,7 @@ IP-CIDR,45.159.97.233/32,no-resolve
 IP-CIDR,45.159.98.145/32,no-resolve
 IP-CIDR,45.159.98.196/32,no-resolve
 IP-CIDR,45.159.98.253/32,no-resolve
+IP-CIDR,46.62.141.44/32,no-resolve
 IP-CIDR,49.12.193.137/32,no-resolve
 IP-CIDR,49.13.204.141/32,no-resolve
 IP-CIDR,65.109.143.62/32,no-resolve
@@ -262,6 +264,7 @@ IP-CIDR6,2a01:4f8:1c1c:5c70::1/128,no-resolve
 IP-CIDR6,2a01:4f9:c012:2e5b::1/128,no-resolve
 IP-CIDR6,2a01:4f9:c012:cd74::1/128,no-resolve
 IP-CIDR6,2a01:4f9:c012:d55c::1/128,no-resolve
+IP-CIDR6,2a01:4f9:c014:f18e::1/128,no-resolve
 IP-CIDR6,2a01:4ff:f0:28d4::1/128,no-resolve
 IP-CIDR6,2a01:4ff:f0:3913::1/128,no-resolve
 IP-CIDR6,2a01:4ff:f0:3c8e::1/128,no-resolve
