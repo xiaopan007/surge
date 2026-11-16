@@ -1,4 +1,4 @@
-# 规则数量: 145
+# 规则数量: 147
 DOMAIN,browser-intake-datadoghq.com
 DOMAIN,chat.openai.com.cdn.cloudflare.net
 DOMAIN,openai-api.arkoselabs.com
@@ -133,6 +133,8 @@ DOMAIN-KEYWORD,notebooklm.google
 DOMAIN-KEYWORD,labs.google
 DOMAIN-SUFFIX,groq.com
 DOMAIN-SUFFIX,meta.ai
+DOMAIN-WILDCARD,scontent-*.xx.fbcdn.net
+DOMAIN,graph.facebook.com
 DOMAIN,imagine.meta.com
 DOMAIN-SUFFIX,githubcopilot.com
 DOMAIN-SUFFIX,perplexity.ai
